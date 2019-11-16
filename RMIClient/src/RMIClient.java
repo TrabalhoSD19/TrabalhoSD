@@ -11,6 +11,7 @@ public class RMIClient {
         PlacesListInterface l1 = null;
         //ola
 
+
         try{
             Thread t = new Thread() {
                 public void run() {
