@@ -17,21 +17,18 @@ public class Multicast {
             MulticastSocket multicastSocket =new MulticastSocket(port);
             multicastSocket.joinGroup(group);
             byte[] sendBuf = object.getBytes();
-            DatagramPacket resposta_order = new DatagramPacket(
-                    sendBuf, sendBuf.length, group, port);
+            DatagramPacket resposta_order = new DatagramPacket(sendBuf, sendBuf.length, group, port);
             multicastSocket.send(resposta_order);
             multicastSocket.send(resposta_order);
             multicastSocket.close();
 
             System.out.println("Sending: " + object + " - " + port);
-
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
-    //Recebe uma string num canal multicast
     public String receive() {
         try {
             InetAddress	group = InetAddress.getByName(grupo);
@@ -48,8 +45,7 @@ public class Multicast {
 
             DatagramPacket packet = new DatagramPacket(new byte[1024], 1024);
             multicastSocket.receive(packet);
-            String msg = new String(packet.getData(), packet.getOffset(),
-                    packet.getLength());
+            String msg = new String(packet.getData(), packet.getOffset(), packet.getLength());
 
             return msg;
         } catch (Exception e) {

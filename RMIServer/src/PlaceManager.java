@@ -6,40 +6,21 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 
 public class PlaceManager extends UnicastRemoteObject implements PlacesListInterface {
-    /**
-     *
-     */
-
     private static final long serialVersionUID = 1L;
 
     private static ArrayList<Place> array = new ArrayList<Place>();
 
     public PlaceManager(int port) throws RemoteException {
-        String copy_address = null;
-        PlacesListInterface places;
-        if (copy_address != null) {
-            try {
-                places =(PlacesListInterface) Naming.lookup(copy_address);
-                array = places.allPlaces();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (NotBoundException e) {
-                e.printStackTrace();
-            }
-        }
-
         Thread t;
-        synchronized(this) {
-            t = new Thread() {
-                public void run() {
-                    while (true) {
-                        Multicast mr = new Multicast();
-                        String response = mr.receive();
-                        System.out.println("Response: " + response + " - " + port);
-                    }
-                }
-            };
-        }
+        t = new Thread() {
+            public void run() {
+            while (true) {
+                Multicast mr = new Multicast();
+                String response = mr.receive();
+                System.out.println("Response: " + response + " - " + port);
+            }
+            }
+        };
         t.start();
     }
 
