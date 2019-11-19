@@ -8,10 +8,11 @@ public class RMIClient {
         try{
             Thread t = new Thread() {
                 public void run() {
-                    RMIServer.main(new String[]{"2025"});
-                    RMIServer.main(new String[]{"2025"});
-                    RMIServer.main(new String[]{"2025"});
+                    RMIServer.main(new String[]{"1234"});
+                    RMIServer.main(new String[]{"1235"});
+                    RMIServer.main(new String[]{"1236"});
 
+/*
                     try {
                         Thread.sleep(1000);
 
@@ -20,7 +21,7 @@ public class RMIClient {
                         Thread.sleep(1000);
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }
+                    }*/
                 }
             };
             t.start();
