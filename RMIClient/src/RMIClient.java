@@ -9,9 +9,10 @@ public class RMIClient {
             Thread t = new Thread() {
                 public void run() {
                     RMIServer.main(new String[]{"2025"});
-                    RMIServer.main(new String[]{"2025"});
-                    RMIServer.main(new String[]{"2025"});
+                    RMIServer.main(new String[]{"2026"});
+                    RMIServer.main(new String[]{"2027"});
 
+                    /*
                     try {
                         Thread.sleep(1000);
 
@@ -21,6 +22,7 @@ public class RMIClient {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                     */
                 }
             };
             t.start();

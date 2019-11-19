@@ -25,6 +25,21 @@ public class RMIServer {
         try {
             PlacesListInterface placeList = new PlaceManager(Integer.parseInt(args[0]));
             System.out.println("Place server ready - " + args[0]);
+
+
+            Thread t;
+            t = new Thread() {
+                public void run() {
+                    int x = 0;
+                    while (true) {
+                        x++;
+                        System.out.println(x);
+                        Multicast mu = new Multicast();
+                        mu.send("Olá");
+                    }
+                }
+            };
+            t.start();
         } catch(Exception e) {
             System.out.println("Place server main " + e.getMessage());
         }
