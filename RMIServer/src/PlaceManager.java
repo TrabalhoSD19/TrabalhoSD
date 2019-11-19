@@ -9,14 +9,13 @@ public class PlaceManager extends UnicastRemoteObject implements PlacesListInter
     /**
      *
      */
+
     private static final long serialVersionUID = 1L;
 
     private static ArrayList<Place> array = new ArrayList<Place>();
 
     public PlaceManager(int port) throws RemoteException {
-
         String copy_address = null;
-
         PlacesListInterface places;
         if (copy_address != null) {
             try {
@@ -28,6 +27,20 @@ public class PlaceManager extends UnicastRemoteObject implements PlacesListInter
                 e.printStackTrace();
             }
         }
+
+        Thread t;
+        synchronized(this) {
+            t = new Thread() {
+                public void run() {
+                    while (true) {
+                        Multicast mr = new Multicast();
+                        String response = mr.receive();
+                        System.out.println("Response: " + response + " - " + port);
+                    }
+                }
+            };
+        }
+        t.start();
     }
 
     @Override
