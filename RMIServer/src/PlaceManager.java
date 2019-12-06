@@ -17,7 +17,10 @@ public class PlaceManager extends UnicastRemoteObject implements PlacesListInter
 
     public <args> PlaceManager(int port) throws RemoteException, InterruptedException {
 
-        String suuid = UUID.randomUUID().toString();
+        final String suuid = UUID.randomUUID().toString();
+        final List listA = new ArrayList();
+
+        listA.add(suuid);
         /*Random rand = new Random();
         int rand_int = rand.nextInt(10);
 */
@@ -67,7 +70,7 @@ public class PlaceManager extends UnicastRemoteObject implements PlacesListInter
             while (true) {
 
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -82,37 +85,41 @@ public class PlaceManager extends UnicastRemoteObject implements PlacesListInter
         Thread a = new Thread(() -> {
 
                 while (true) {
+
+
                     try {
-                        Thread.sleep(5000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     int tamanholista = listA.size();
-                    int index_lista = tamanholista - 1;
+                    //int index_lista = tamanholista - 1;
                     Multicast mr = new Multicast();
                     String response = mr.receive();
 
                     String[] output = response.split(",");
+
+
                     if(output[0].equals("hearthbeat")){
                         if (output[1].equals(suuid)){
-                           // System.out.println("o id é igual ao meu, logo nao vou adicionar À minha lista");
+                           System.out.println("o id é igual ao meu, logo nao vou adicionar À minha lista");
                         }else{
-                            tamanholista = tamanholista-1;
-                            for(;index_lista < tamanholista;index_lista++) {
-                                if(listA.contains(suuid)){
-                                  listA.add(suuid);
-                              System.out.println(tamanholista);
-                                    //System.out.println("adicionei À lista o id" + suuid);
+                            if(!listA.contains(output[1])){
+                                listA.add(output[1]);
 
-                        }else{
-                                //nao faz nada
-                                }}}}
-                    else {
-                           // System.out.println("esta mensagem não é um hearthbeat");
+                                System.out.println("adicionei À lista o id" + output[1]+"e eu sou o" + suuid);
+                                System.out.println("a lista tem" + tamanholista + "elementos");
+                            }else{
+                                System.out.println("a lista ja contem");
+                                }
+                        }
                     }
-                }
-            });
-        a.start();}
+                }});
+            a.start();
+
+    }
+
 /*
         String phone = "012-3456789";
         String[] output = phone.split("-");
