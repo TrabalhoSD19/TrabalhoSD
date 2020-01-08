@@ -12,6 +12,8 @@ public class RMIClient {
                     RMIServer.main(new String[]{"2026"});
                     RMIServer.main(new String[]{"2027"});
 
+                    RMIFrontEnd.main(new String[]{"2027"});
+
                     /*
                     try {
                         Thread.sleep(1000);
