@@ -25,4 +25,10 @@ public class Place implements Serializable{
         this.postalCode = postalCode;
         this.locality = locality;
     }
+
+    @Override
+    public String toString() {
+        return ("PostalCode:"+this.getPostalCode()+
+                " Locality: "+ this.getLocality() );
+    }
 }
