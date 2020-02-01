@@ -10,7 +10,6 @@ public class RMIFrontEnd {
     public synchronized static void main(String[] args) {
         // TODO Auto-generated method stub
         try{
-
             r = LocateRegistry.createRegistry(Integer.parseInt(args[0]));
         }catch(RemoteException a){
             a.printStackTrace();

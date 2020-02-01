@@ -7,17 +7,12 @@ public class RMIClient {
         try {
             Thread t = new Thread() {
                 public void run() {
-                    RMIFrontEnd.main(new String[]{"2030"});
                     try {
-                        Thread.sleep(3000);
+                        RMIFrontEnd.main(new String[]{"2030"});
                         RMIServer.main(new String[]{"2025"});
-                        Thread.sleep(500);
                         RMIServer.main(new String[]{"2026"});
-                        Thread.sleep(500);
                         RMIServer.main(new String[]{"2027"});
-                        Thread.sleep(500);
-
-                        //RMIFrontEnd.main(new String[]{"2030"});
+                        Thread.sleep(4000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -29,18 +24,20 @@ public class RMIClient {
                         Thread.sleep(1000);
                         Place p1 = new Place("3515", "Viseu");
                         plm.addPlace(p1);
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
 
-                        checkPlacesListOnServer("2025");
+                        /*checkPlacesListOnServer("2025");
+                        Thread.sleep(1000);
                         checkPlacesListOnServer("2026");
+                        Thread.sleep(1000);
                         checkPlacesListOnServer("2027");
-
+                        Thread.sleep(1000);*/
                         Place x = plm.getPlace("3515");
                         System.out.println(x);
 
-                        Thread.sleep(30000);
-                  //      Registry r = LocateRegistry.getRegistry(2027);
-                     //   r.unbind("placelist");
+                        Thread.sleep(20000);
+                        Registry r = LocateRegistry.getRegistry(2026);
+                        r.unbind("placelist");
 
                         plm = (PlacesListInterface) Naming.lookup("rmi://localhost:2030/frontend");
                         Thread.sleep(1000);
@@ -48,9 +45,9 @@ public class RMIClient {
                         plm.addPlace(p1);
                         Thread.sleep(3000);
 
-                        checkPlacesListOnServer("2025");
-                        checkPlacesListOnServer("2026");
-                        checkPlacesListOnServer("2027");
+                        //checkPlacesListOnServer("2025");
+                        //checkPlacesListOnServer("2026");
+                        //checkPlacesListOnServer("2027");
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -59,7 +56,7 @@ public class RMIClient {
             };
             t.start();
         } catch (Exception e) {
-            System.out.println("Problemas de Comunicação: " + e.getMessage());
+            System.out.println("Problemas de Comunicação" + e.getMessage());
         }
     }
 
@@ -69,7 +66,7 @@ public class RMIClient {
             System.out.println("---------------------------------------------");
             System.out.println("Objects on Server [" + port + "]");
             plm = (PlacesListInterface) Naming.lookup("rmi://localhost:" + port + "/placelist");
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
             plm.allPlaces().forEach(place -> {
                 System.out.println(place.toString());
             });
@@ -77,4 +74,5 @@ public class RMIClient {
             e.printStackTrace();
         }
     }
+
 }
